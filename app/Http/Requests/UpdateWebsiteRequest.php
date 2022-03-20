@@ -24,7 +24,8 @@ class UpdateWebsiteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'url' => 'required|stirng|min:10'
         ];
     }
 }
