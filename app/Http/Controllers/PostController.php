@@ -14,8 +14,13 @@ use Illuminate\Support\Facades\Mail;
 class PostController extends Controller
 {
 
-
-
+    /**
+     * this method allows to post on website function
+     *
+     * @param Request $request
+     * @param [type] $id
+     * @return void
+     */
     public function post_for_website(Request $request, $id)
     {
         
