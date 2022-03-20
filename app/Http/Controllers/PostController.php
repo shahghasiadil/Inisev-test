@@ -5,9 +5,31 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Mail\NewPostMail;
+use App\Models\Website;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 
 class PostController extends Controller
 {
+
+
+
+    public function post_for_website(Request $request, $id)
+    {
+        
+        $data = $this->validate($request,[
+            'title' => 'required|string',
+            'description' => 'required|string'
+        ]);
+        $website = Website::findOrFail($id);
+        $post = $website->posts()->create($data);
+        Artisan::call('mail:send', [
+            'post' => $post->id
+        ]);
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +38,8 @@ class PostController extends Controller
     public function index()
     {
         return Post::all();
+      
+      
     }
 
     /**
