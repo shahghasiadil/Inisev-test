@@ -15,6 +15,11 @@ class SubscriptionController extends Controller
      */
     public function __invoke(Request $request)
     {
+        $this->validate($request,[
+            'website_id' => 'required',
+            'user_id' => 'required'
+        ]);
+        
         $website = Website::findOrFail($request->website_id);
         $website->users()->attach($request->user_id);
 
